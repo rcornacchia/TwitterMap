@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Twitter Map</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <style>
+      html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+      }
+      .container {
+          min-height:5%;
+          width:100%;
+          /*position: absolute;*/
+          /*margin: auto;*/
+          margin-top: 5px;
+      }
+      .dropdown {
+          text-align:center;
+      }
+      .dropdown-menu {
+          left: 50%;
+          right: auto;
+          text-align: center;
+          transform: translate(-50%, 0);
+      }
+      #map {
+        height: 95%;
+      }
+    </style>
+  </head>
+  <body>
+
+      <div class="container">
+          <h4 style="float:left";>Election Tweet Map</h4>
+          <div class="form-inline" style="float:right;">
+              <h4 style="float:left; margin-right: 7px">Range</h4>
+              <input type="text" class="form-control">
+              <input type="button" class="btn btn-primary" type="button" value="submit">
+          </div>
+          <input type="button" class="btn btn-success" type="button" value="Reset" style="float:right; margin-right: 12px;">
+
+
+            <!-- <div class="input-group">
+                <input type="text" class="form-control">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button">Go!</button>
+                </span>
+            </div> -->
+          <!-- <input type="TEXT" id="candidate" size="40"><br>
+          <input type="button" id="submit" value="Submit"> -->
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle btnStatus" type="button" id="menu1" data-toggle="dropdown">All Candidates
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu dropdown" role="menu" aria-labelledby="menu1">
+              <li role="presentation"><a role="All Candidates" tabindex="-1" href="#">All Candidates</a></li>
+              <li role="presentation"><a role="Hillary Clinton" tabindex="-1" href="#h">Hillary Clinton</a></li>
+              <li role="presentation"><a role="Bernie Sanders" tabindex="-1" href="#">Bernie Sanders</a></li>
+              <li role="presentation"><a role="Donald Trump" tabindex="-1" href="#">Donald Trump</a></li>
+              <li role="presentation"><a role="Ted Cruz" tabindex="-1" href="#">Ted Cruz</a></li>
+              <li role="presentation"><a role="Marco Rubio" tabindex="-1" href="#">Marco Rubio</a></li>
+              <li role="presentation"><a role="Ben Carson" tabindex="-1" href="#">Ben Carson</a></li>
+              <li role="presentation"><a role="John Kasich" tabindex="-1" href="#">John Kasich</a></li>
+              <li role="presentation"><a role="Jeb Bush" tabindex="-1" href="#">Jeb Bush</a></li>
+              <li role="presentation"><a role="Carly Fiorina" tabindex="-1" href="#">Carly Fiorina</a></li>
+              <li role="presentation"><a role="Mike Huckabee" tabindex="-1" href="#">Mike Huckabee</a></li>
+          </ul>
+        </div>
+      </div>
+    <div id="map"></div>
+    <!-- <script data-main="js/app.js" src="libs/require.js"></script> -->
+    <!-- <script data-main="js/app.js" src="libs/jquery.js"></script> -->
+    <!-- <script src="libs/elasticsearch.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/elasticsearch/10.1.3/elasticsearch.jquery.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.js"></script> -->
+
+    <script src="app.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuzSFDI_biuGz6L9S4fhWZqW9qX8g2eS0&callback=initMap" async defer></script>
+  </body>
+</html>
