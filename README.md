@@ -9,7 +9,7 @@ The TweetMap plots Tweets that mention prominent current and recent presidential
 
 ##Implementation
 This application is built with Node.js on top of AWS Elastic BeanStalk and AWS ElasticSearch for persistent storage and search. The frontend uses Bootstrap and JQuery, as well as the Paper Bootswatch Theme (http://bootswatch.com/paper/). Server.js is the name of the node.js file, while app.js handles all front-end logic.  
-
+  
 The application can filter tweets by name and/or by location. The dropdown-menu in the top left indicates the candidate name being searched for. The default is “All Candidates,” which means that all tweets are shown at the start. In order to see the content of a tweet, a user can simply click on a marker on the map. To filter by distance, the user simply clicks on the map, which clears all tweets and shows only the tweets that match the distance (and filters according to candidate name selected). The default search radius is 1000 km. This search range can be altered by entering a new range in the top right and clicking the “Submit” button. After clicking, the user can keep clicking to adjust the search. The search will obtain the coordinates of wherever the user clicked and search using the global range variable to determine a search radius. The click is the center of the search area.  
 
 These searches are handled with two routes, getTweets and getTweetsWithLocation. The first requires a candidate name as an argument, while the latter requires candidate name, latitude, longitude, and search range. The client goes through the server to query the ElasticSearch database. While earlier versions allowed the client to directly query the database, this was insecure, so we added these two routes.
