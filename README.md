@@ -1,8 +1,8 @@
 # TwitterMap
-Robert Cornacchia (rlc2160)
-Oriana Fuentes (oif2102)
-COMS 6998 Cloud Computing and Big Data		
-Professor Sahu		
+Robert Cornacchia (rlc2160)  
+Oriana Fuentes (oif2102)  
+COMS 6998 Cloud Computing and Big Data	  	
+Professor Sahu		  
 
 ##Overview
 The TweetMap plots Tweets that mention prominent current and recent presidential candidates in the 2016 US election. The Tweets were sourced using the Twitter streaming API, filtering by candidate names in the text and by the availability of a geolocation. The sample includes Tweets mentioning Hillary Clinton, Donald Trump, Bernie Sanders, Ted Cruz, Marco Rubio, Ben Cason, John Kasich, Jeb Bush, Carly Fiorina and Mike Huckabee for a total of 10 candidates.  
