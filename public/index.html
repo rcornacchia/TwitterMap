@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Twitter Map</title>
+    <title>Tweet Map</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href ="paper.min.css">
+    <!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <style>
@@ -14,65 +15,97 @@
         margin: 0 auto;
         padding: 0;
       }
-      .container {
+      /*.container {
           min-height:5%;
           width:100%;
           /*position: absolute;*/
           /*margin: auto;*/
-          margin-top: 5px;
-      }
-      .dropdown {
+      /*.dropdown {
           text-align:center;
       }
+
       .dropdown-menu {
+          margin-top: 5px;
           left: 50%;
           right: auto;
           text-align: center;
-          transform: translate(-50%, 0);
-      }
+      }*/
       #map {
-        height: 95%;
+        height: 94%;
       }
+      .navbar {
+          margin-bottom: 0;
+      }
+
+      .navbar-text {
+          color: black;
+          font-size: 125%;
+      }
+
     </style>
   </head>
   <body>
-
-      <div class="container">
-          <h4 style="float:left";>Election Tweet Map</h4>
-          <div class="form-inline" style="float:right;">
-              <h4 style="float:left; margin-right: 7px">Range</h4>
-              <input type="text" class="form-control">
-              <input type="button" class="btn btn-primary" type="button" value="submit">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Tweet Map</a>
           </div>
-          <input type="button" class="btn btn-success" type="button" value="Reset" style="float:right; margin-right: 12px;">
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div class = "navbar-center">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                         <a href="#" class="dropdown-toggle" id="candidateDropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="color:white; font-size:125%;">All Candidates <span class="caret"></span></a>
+                         <ul class="dropdown-menu dropdown" role="menu">
+                             <li role="presentation"><a role="All Candidates" tabindex="-1" href="#">All Candidates</a></li>
+                             <li role="presentation"><a role="Hillary Clinton" tabindex="-1" href="#">Hillary Clinton</a></li>
+                             <li role="presentation"><a role="Bernie Sanders" tabindex="-1" href="#">Bernie Sanders</a></li>
+                             <li role="presentation"><a role="Donald Trump" tabindex="-1" href="#">Donald Trump</a></li>
+                             <li role="presentation"><a role="Ted Cruz" tabindex="-1" href="#">Ted Cruz</a></li>
+                             <li role="presentation"><a role="Marco Rubio" tabindex="-1" href="#">Marco Rubio</a></li>
+                             <li role="presentation"><a role="Ben Carson" tabindex="-1" href="#">Ben Carson</a></li>
+                             <li role="presentation"><a role="John Kasich" tabindex="-1" href="#">John Kasich</a></li>
+                             <li role="presentation"><a role="Jeb Bush" tabindex="-1" href="#">Jeb Bush</a></li>
+                             <li role="presentation"><a role="Carly Fiorina" tabindex="-1" href="#">Carly Fiorina</a></li>
+                             <li role="presentation"><a role="Mike Huckabee" tabindex="-1" href="#">Mike Huckabee</a></li>
+                         </ul>
+                       </li>
+                        <!-- <li class="dropdown">
+                            <button class="btn btn-default dropdown-toggle btnStatus" type="button" id="menu1" data-toggle="dropdown">All Candidates
+                            <span class="caret"></span></button>
+                            <ul class="dropdown-menu dropdown" role="menu" aria-labelledby="menu1">
+
+                            </ul>
+                        </li> -->
+                    </ul>
+                </div>
 
 
-            <!-- <div class="input-group">
-                <input type="text" class="form-control">
-                <span class="input-group-btn">
-                    <button class="btn btn-primary" type="button">Go!</button>
-                </span>
-            </div> -->
-          <!-- <input type="TEXT" id="candidate" size="40"><br>
-          <input type="button" id="submit" value="Submit"> -->
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle btnStatus" type="button" id="menu1" data-toggle="dropdown">All Candidates
-          <span class="caret"></span></button>
-          <ul class="dropdown-menu dropdown" role="menu" aria-labelledby="menu1">
-              <li role="presentation"><a role="All Candidates" tabindex="-1" href="#">All Candidates</a></li>
-              <li role="presentation"><a role="Hillary Clinton" tabindex="-1" href="#h">Hillary Clinton</a></li>
-              <li role="presentation"><a role="Bernie Sanders" tabindex="-1" href="#">Bernie Sanders</a></li>
-              <li role="presentation"><a role="Donald Trump" tabindex="-1" href="#">Donald Trump</a></li>
-              <li role="presentation"><a role="Ted Cruz" tabindex="-1" href="#">Ted Cruz</a></li>
-              <li role="presentation"><a role="Marco Rubio" tabindex="-1" href="#">Marco Rubio</a></li>
-              <li role="presentation"><a role="Ben Carson" tabindex="-1" href="#">Ben Carson</a></li>
-              <li role="presentation"><a role="John Kasich" tabindex="-1" href="#">John Kasich</a></li>
-              <li role="presentation"><a role="Jeb Bush" tabindex="-1" href="#">Jeb Bush</a></li>
-              <li role="presentation"><a role="Carly Fiorina" tabindex="-1" href="#">Carly Fiorina</a></li>
-              <li role="presentation"><a role="Mike Huckabee" tabindex="-1" href="#">Mike Huckabee</a></li>
-          </ul>
-        </div>
-      </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                <p class="navbar-text" style="color:#b3d9ff;">Click to Filter by Geolocation.</p>
+                <p class="navbar-text" style="color:white;" id="rangeText">Current Range: 1000km</p>
+                <form class="navbar-form navbar-right" role="search">
+                  <div class="form-group">
+                    <input type="text" id = "range" class="form-control" placeholder="Filter Range (km)">
+                  </div>
+                  <button type="submit" id="btnSubmit" class="btn btn-default">Submit</button>
+                  <button type="submit" id="rangeReset" class="btn btn-danger">Reset</button>
+
+                </form>
+            </ul>
+          </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+
     <div id="map"></div>
     <!-- <script data-main="js/app.js" src="libs/require.js"></script> -->
     <!-- <script data-main="js/app.js" src="libs/jquery.js"></script> -->

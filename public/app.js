@@ -1,20 +1,19 @@
-// TODO
-// Bonus geolocation
-
 var map;
 var tweets = [];
 var gMarkers = [];
 var currentCandidate = "All Candidates";
-// var tweetsURL = "http://localhost:8081/getTweets";
-// var locationURL = "http://localhost:8081/getTweetsWithLocation"
-var tweetsURL = "http://noes.us-west-2.elasticbeanstalk.com/getTweets"
-var locationURL = "http://noes.us-west-2.elasticbeanstalk.com/getTweetsWithLocation"
+var range = "1000";
+
+// for local testing
+var tweetsURL = "http://localhost:8081/getTweets";
+var locationURL = "http://localhost:8081/getTweetsWithLocation"
+
+// endpoints when hosted on aws elastic beanstalk
+// var tweetsURL = "http://noes.us-west-2.elasticbeanstalk.com/getTweets"
+// var locationURL = "http://noes.us-west-2.elasticbeanstalk.com/getTweetsWithLocation"
 function mapTweets(data) {
-    // console.log(data.hits);
     tweets = [];
-    // obj = JSON.parse(data);
     obj = data;
-    // console.log(obj);
     for(var i=0; i<obj.hits.hits.length; i++){
         tweets.push([obj.hits.hits[i]._source.location, obj.hits.hits[i]._source.text]);
     }
@@ -38,7 +37,6 @@ function mapTweets(data) {
         }));
     });
 }
-
 function initMap() {
     $(function(){
        $(".dropdown-menu li a").click(function(){
@@ -53,19 +51,14 @@ function initMap() {
     google.maps.event.addListener(map, "click", function(event) {
         var lat = event.latLng.lat();
         var lng = event.latLng.lng();
-        console.log("Lat=" + lat + "; Lng=" + lng);
+        console.log("Lat=" + lat + "; Lng=" + lng + "; Range= " + range);
         map.clearOverlays();
-        // $.post("noes.us-west-2.elasticbeanstalk.com/getTweetsWithLocation:8081",{candidate: currentCandidate, lat: lat, lng: lng}, function(data){
-        $.post(locationURL, {candidate: currentCandidate, lat: lat, lng: lng}, function(data){
+        $.post(locationURL, {candidate: currentCandidate, lat: lat, lng: lng, range: range}, function(data){
             mapTweets(data);
-            // console.log(currentCandidate);
         });
     });
     // fetch all tweets
-    // $.post("http://noes.us-west-2.elasticbeanstalk.com/getTweets", {candidate: currentCandidate}, function(data){
     $.post(tweetsURL, {candidate: currentCandidate}, function(data){
-
-        // console.log(data);
         mapTweets(data);
     });
     // delete marker function
@@ -76,17 +69,35 @@ function initMap() {
         gMarkers = [];
     }
 }
-
 $(document).ready(function(){
     $(document.body).on('click', '.dropdown li a', function (e) {
         // delete existing markers
         map.clearOverlays();
         currentCandidate = $(this).text();
+        console.log(currentCandidate);
+        $(this).parents('.dropdown').find('.dropdown-toggle').html(currentCandidate+'<span class="caret"></span>');
 
-        // $.post("http://noes.us-west-2.elasticbeanstalk.com/getTweets",{candidate: currentCandidate}, function(data){
         $.post(tweetsURL, {candidate: currentCandidate}, function(data){
             mapTweets(data);
-            // console.log(currentCandidate);
+        });
+    });
+});
+$(document).ready(function(){
+    $("#btnSubmit").on('click', function(e){
+        e.preventDefault();
+        range = $("#range").val();
+        $("#range").val('');
+        $("#rangeText").text("Current Range: "+range+"km");
+    });
+});
+$(document).ready(function(){
+    $("#rangeReset").on('click', function(e){
+        e.preventDefault();
+        //clear map
+        map.clearOverlays();
+        //refetch tweets
+        $.post(tweetsURL, {candidate: currentCandidate}, function(data){
+            mapTweets(data);
         });
     });
 });
