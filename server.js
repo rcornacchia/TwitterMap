@@ -14,6 +14,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
+app.get('/', function(req, res) {
+    // res.sendFile(path.join(__dirname + '/index.html'));
+    res.sendFile('/public/index.html');
+});
+
 // handle requests for specific candidates and all candidates
 app.post('/getTweets', function(req,res) {
     var candidate = req.body.candidate;
