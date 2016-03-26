@@ -4,6 +4,7 @@ var express = require('express'),
     request = require('request'),
     // twitter = require('ntwitter'),
     bodyParser = require("body-parser"),
+    AWS = require('aws-sdk'),
     app = express();
 
 var headers = {

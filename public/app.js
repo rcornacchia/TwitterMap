@@ -5,12 +5,12 @@ var currentCandidate = "All Candidates";
 var range = "1000";
 
 // for local testing
-// var tweetsURL = "http://localhost:8081/getTweets";
-// var locationURL = "http://localhost:8081/getTweetsWithLocation"
+var tweetsURL = "http://localhost:8081/getTweets";
+var locationURL = "http://localhost:8081/getTweetsWithLocation"
 
 // endpoints when hosted on aws elastic beanstalk
-var tweetsURL = "http://noes.us-west-2.elasticbeanstalk.com/getTweets"
-var locationURL = "http://noes.us-west-2.elasticbeanstalk.com/getTweetsWithLocation"
+// var tweetsURL = "http://noes.us-west-2.elasticbeanstalk.com/getTweets"
+// var locationURL = "http://noes.us-west-2.elasticbeanstalk.com/getTweetsWithLocation"
 function mapTweets(data) {
     tweets = [];
     obj = data;
