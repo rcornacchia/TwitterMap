@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.9.0",
     "body-parser": "^1.8.1",
-    "request" : "*"
+    "request" : "*",
+    "ntwitter" : "*"
   }
 }

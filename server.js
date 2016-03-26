@@ -2,7 +2,7 @@
 var express = require('express'),
     http = require('http'),
     request = require('request'),
-    // twitter = require('ntwitter'),
+    twitter = require('ntwitter'),
     bodyParser = require("body-parser"),
     AWS = require('aws-sdk'),
     app = express();
@@ -132,13 +132,13 @@ app.listen(process.env.PORT || 8081);
 console.log("server started on 8081");
 
 // Setup twitter stream api
-// var twit = new twitter({
-//     consumer_key: 'cu607zV20zgS5deVCjJphwFfc',
-//     consumer_secret: 'niSiKTDe5b30XMshQMmwmLz2SqVfDsksxNIyyVjySALU6YfkYv',
-//     access_token_key: '2475805220-VabahyH70uVb5ypd3oI48iLYw1oQSlPIzwB0Yi0',
-//     access_token_secret: '3bSwrTiH5ukl3L3lXMfY1zFjB1x6GOUR9DIeLW0zb8vPQ'
-// }),
-// stream = null;
+var twit = new twitter({
+    consumer_key: 'cu607zV20zgS5deVCjJphwFfc',
+    consumer_secret: 'niSiKTDe5b30XMshQMmwmLz2SqVfDsksxNIyyVjySALU6YfkYv',
+    access_token_key: '2475805220-VabahyH70uVb5ypd3oI48iLYw1oQSlPIzwB0Yi0',
+    access_token_secret: '3bSwrTiH5ukl3L3lXMfY1zFjB1x6GOUR9DIeLW0zb8vPQ'
+}),
+stream = null;
 
 // // create index
 // client.indices.create({
@@ -158,29 +158,29 @@ console.log("server started on 8081");
 
 
 //Create web sockets connection.
-// twit.stream('statuses/filter', {
-//     track: ['Trump', 'Clinton', 'Sanders', 'Ted Cruz', 'Marco Rubio', 'Ben Carson', 'Kasich', 'Jeb Bush', 'Carly Fiorina', 'Mike Huckabee']
-// }, function(stream) {
-//     stream.on('data', function (data) {
-//         if (data.geo) {
-//             console.log(data.place.full_name, data.text, data.geo.coordinates[0], data.geo.coordinates[1]);
-//             client.create({
-//                 index: 'geoindex',
-//                 id: data.id,
-//                 type: 'candidateTweet',
-//                 body: {
-//                     text: data.text,
-//                     location: {
-//                         "lat": data.geo.coordinates[0],
-//                         "lon": data.geo.coordinates[1]
-//                     }
-//                 }
-//             }, function (error, response) {
-//                 console.log("inserted record");
-//             });
-//         }
-//     });
-// });
+twit.stream('statuses/filter', {
+    track: ['Trump', 'Clinton', 'Sanders', 'Ted Cruz', 'Marco Rubio', 'Ben Carson', 'Kasich', 'Jeb Bush', 'Carly Fiorina', 'Mike Huckabee']
+}, function(stream) {
+    stream.on('data', function (data) {
+        if (data.geo && data.lang == "en") {
+            console.log(data.place.full_name, data.text, data.geo.coordinates[0], data.geo.coordinates[1]);
+            client.create({
+                index: 'geoindex',
+                id: data.id,
+                type: 'candidateTweet',
+                body: {
+                    text: data.text,
+                    location: {
+                        "lat": data.geo.coordinates[0],
+                        "lon": data.geo.coordinates[1]
+                    }
+                }
+            }, function (error, response) {
+                console.log("inserted record");
+            });
+        }
+    });
+});
 
 // // code used to migrate indices
 // client.search({
