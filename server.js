@@ -164,20 +164,20 @@ twit.stream('statuses/filter', {
     stream.on('data', function (data) {
         if (data.geo && data.lang == "en") {
             console.log(data.place.full_name, data.text, data.geo.coordinates[0], data.geo.coordinates[1]);
-            client.create({
-                index: 'geoindex',
-                id: data.id,
-                type: 'candidateTweet',
-                body: {
-                    text: data.text,
-                    location: {
-                        "lat": data.geo.coordinates[0],
-                        "lon": data.geo.coordinates[1]
-                    }
-                }
-            }, function (error, response) {
-                console.log("inserted record");
-            });
+            // client.create({
+            //     index: 'geoindex',
+            //     id: data.id,
+            //     type: 'candidateTweet',
+            //     body: {
+            //         text: data.text,
+            //         location: {
+            //             "lat": data.geo.coordinates[0],
+            //             "lon": data.geo.coordinates[1]
+            //         }
+            //     }
+            // }, function (error, response) {
+            //     console.log("inserted record");
+            // });
         }
     });
 });
