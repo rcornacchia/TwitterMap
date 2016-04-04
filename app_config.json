@@ -1,5 +1,7 @@
-{ 
-  "AWS_REGION": "",
+{
+  "accessKeyId":"AKIAJF5I5J6HW652XSUA",
+  "secretAccessKey": "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",
+  "region": "us-west-2",
   "STARTUP_SIGNUP_TABLE": "",
   "NEW_SIGNUP_TOPIC": ""
 }
