@@ -8,7 +8,9 @@ var express = require('express'),
     app = express(),
     AlchemyAPI = require('alchemy-api')
     queueUrl ="https://sqs.us-west-2.amazonaws.com/713208773927/TweetQueue",
-    receipt ="AQEBMd5dMKkVzhjem3C95hGv7GDL2eIkCAp2qzpUJ7YMxRnxay94emaXhDNNzR6yEEZ2++0sV2krMzCR6PNn+nX1QHRlfhHhLh5wARspZwzvs2JRt5gBTreG5DHqCCABJ3KuG1gLa3oPku0Orxqeg5zc9FAJ0yA64csTWtzHNB9lVs+SCRRrVS+V7dEEVqX0IcTtYtcKFZBb90O1x7lGMi7NBUTjEzVXvFQWOkzjvox2IZGEN3Y58NPz6IN+hQ7HLAnY+l2vAlZv7WWxHrQQvwUwu2yJoXkNShwLxt2pYJnA9CqutBGIwfymRaxRZPgfmv2jcUo1SreU6OmTvq/RMl2K6r2QnGlo6AhxjfOfo44H/iOH3iw5ajpNfFOxwT1qAlJI+o+C+J8nn1qVSBlLpXUteQ==";
+    receipt ="AQEBMd5dMKkVzhjem3C95hGv7GDL2eIkCAp2qzpUJ7YMxRnxay94emaXhDNNzR6yEEZ2++0sV2krMzCR6PNn+nX1QHRlfhHhLh5wARspZwzvs2JRt5gBTreG5DHqCCABJ3KuG1gLa3oPku0Orxqeg5zc9FAJ0yA64csTWtzHNB9lVs+SCRRrVS+V7dEEVqX0IcTtYtcKFZBb90O1x7lGMi7NBUTjEzVXvFQWOkzjvox2IZGEN3Y58NPz6IN+hQ7HLAnY+l2vAlZv7WWxHrQQvwUwu2yJoXkNShwLxt2pYJnA9CqutBGIwfymRaxRZPgfmv2jcUo1SreU6OmTvq/RMl2K6r2QnGlo6AhxjfOfo44H/iOH3iw5ajpNfFOxwT1qAlJI+o+C+J8nn1qVSBlLpXUteQ==",
+    AlchemyAPI = require('./alchemyapi'),
+    alchemyapi = new AlchemyAPI('796dd926f322f9080f17ead866da416525781144');
 
 var headers = {
     'Content-Type' : 'application/x-www-form-urlencoded'
@@ -162,12 +164,13 @@ stream = null;
 
 //Create web sockets connection.
 twit.stream('statuses/filter', {
-    track: ['Trump', 'Clinton', 'Sanders', 'Ted Cruz', 'Marco Rubio', 'Ben Carson', 'Kasich', 'Jeb Bush', 'Carly Fiorina', 'Mike Huckabee']
+    track: ['and','Trump', 'Clinton', 'Sanders', 'Ted Cruz', 'Marco Rubio', 'Ben Carson', 'Kasich', 'Jeb Bush', 'Carly Fiorina', 'Mike Huckabee']
 }, function(stream) {
     stream.on('data', function (data) {
         if (data.geo && data.lang == "en") {
-<<<<<<< HEAD
+//<<<<<<< HEAD
             console.log(data.place.full_name, data.text, data.geo.coordinates[0], data.geo.coordinates[1]);
+            sentiment(data.text)
             // client.create({
             //     index: 'geoindex',
             //     id: data.id,
@@ -182,9 +185,8 @@ twit.stream('statuses/filter', {
             // }, function (error, response) {
             //     console.log("inserted record");
             // });
-=======
-          console.log(data.place.full_name, data.text, data.geo.coordinates[0], data.geo.coordinates[1]);
-          processSentiment(data.text)
+//=======
+
           //not sure how to pass sentiment from proess sentiment to indexing
           //IndexTweets(data, tweetSentiment)
           //PlaceinQ(data)
@@ -263,7 +265,7 @@ app.get('/delete', function (req, res) {
         }
         else {
             res.send(data);
->>>>>>> 1c0e5ebbcaa3703795ad80fdf4c02ad5cb5412a0
+//>>>>>>> 1c0e5ebbcaa3703795ad80fdf4c02ad5cb5412a0
         }
     });
 });
@@ -291,18 +293,26 @@ client.create({
 };
 
 
-function processSentiment(sampleText){
-  //setting up alchemy API
-  var alchemy = new AlchemyAPI('796dd926f322f9080f17ead866da416525781144');
-  //var sampleText = "This class is the best thing that has ever happened!";
-  alchemy.sentiment('text', sampleText, function(err, response) {
-      if (err) throw err;
+function sentiment(demo_text) {
+  //var demo_text = 'Today is a terrible day.';
+	alchemyapi.sentiment('text', demo_text, {}, function(response) {
+		console.log(demo_text +" " + response["docSentiment"]["type"] +" " + response["docSentiment"]["score"]);
+    //text(req, res, output);
+	});
+}
 
-      var sentimentTest = response.docSentiment.type;
-      console.log(sampleText, sentimentTest);
-      processSentiment =  sentimentTest
-})
-};
+// function processSentiment(sampleText){
+//   //setting up alchemy API
+//   var alchemy = new AlchemyAPI('796dd926f322f9080f17ead866da416525781144');
+//   //var sampleText = "This class is the best thing that has ever happened!";
+//   alchemy.sentiment('text', sampleText, function(err, response) {
+//       if (err) throw err;
+//
+//       var sentimentTest = response.docSentiment.type;
+//       console.log(sampleText, sentimentTest);
+//       processSentiment =  sentimentTest
+// })
+// };
 
 // // code used to migrate indices
 // client.search({
